@@ -285,9 +285,25 @@ class UserManagementManager2 {
                 throw new Error(data.message || 'Failed to create user');
             }
 
+            const newUser = await response.json();
+
+            // Log activity
+            if (window.activityService) {
+                await window.activityService.addActivity(
+                    'user_created',
+                    `Created new user: ${username} (${role})`,
+                    { userId: newUser._id, username, role }
+                );
+            }
+
             this.showMessage('User created successfully!', 'success');
             document.getElementById('create-user-form').reset();
             await this.refresh();
+            
+            // Refresh dashboard if it exists
+            if (window.dashboardManager) {
+                window.dashboardManager.refresh();
+            }
         } catch (error) {
             console.error('Error creating user:', error);
             this.showMessage(error.message || 'Failed to create user', 'error');

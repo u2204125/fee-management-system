@@ -147,12 +147,27 @@ class StudentManagementManager {
 
             if (response.ok) {
                 const student = await response.json();
+                
+                // Log activity
+                if (window.activityService) {
+                    await window.activityService.addActivity(
+                        'student_added',
+                        `Added new student: ${student.name} (ID: ${student.studentId})`,
+                        { studentId: student._id, studentName: student.name, studentNumber: student.studentId }
+                    );
+                }
+                
                 Utils.showToast(`Student added successfully with ID: ${student.studentId}`, 'success');
                 document.getElementById('addStudentForm').reset();
                 this.clearCourseSelection();
                 
                 // Clear cache
                 localStorage.removeItem('students_cache');
+                
+                // Refresh dashboard if it exists
+                if (window.dashboardManager) {
+                    window.dashboardManager.refresh();
+                }
             } else {
                 const error = await response.json();
                 Utils.showToast(error.message || 'Failed to add student', 'error');

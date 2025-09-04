@@ -14,6 +14,27 @@ class DashboardManager {
 
     init() {
         this.refresh();
+        this.createTestActivityIfNeeded();
+    }
+
+    async createTestActivityIfNeeded() {
+        try {
+            // Check if any activities exist
+            const response = await fetch('/api/activities');
+            if (response.ok) {
+                const activities = await response.json();
+                if (activities.length === 0 && window.activityService) {
+                    // Create a welcome activity if none exist
+                    await window.activityService.addActivity(
+                        'system_started',
+                        'Welcome to Break The Fear Fee Management System',
+                        { timestamp: new Date().toISOString() }
+                    );
+                }
+            }
+        } catch (error) {
+            console.error('Error creating test activity:', error);
+        }
     }
 
     async refresh() {
@@ -165,23 +186,30 @@ class DashboardManager {
 
     async loadRecentActivities() {
         try {
+            console.log('Loading recent activities...');
             const response = await fetch('/api/activities');
+            console.log('Activities response status:', response.status);
+            
             if (!response.ok) {
-                console.error('Failed to fetch activities');
+                console.error('Failed to fetch activities, status:', response.status);
+                this.showErrorActivities();
                 return;
             }
 
             const allActivities = await response.json();
+            console.log('All activities loaded:', allActivities.length);
             const activities = allActivities.slice(0, 10); // Get latest 10 activities
             this.cache.activities = activities;
 
             const activitiesContainer = document.getElementById('recentActivities');
 
             if (activities.length === 0) {
-                activitiesContainer.innerHTML = '<p class="text-center">No recent activities</p>';
+                console.log('No activities found, showing empty state');
+                this.showEmptyActivities();
                 return;
             }
 
+            console.log('Displaying', activities.length, 'activities');
             activitiesContainer.innerHTML = activities.map(activity => `
                 <div class="activity-item">
                     <div class="activity-icon">
@@ -195,9 +223,51 @@ class DashboardManager {
             `).join('');
         } catch (error) {
             console.error('Error loading recent activities:', error);
-            const activitiesContainer = document.getElementById('recentActivities');
-            activitiesContainer.innerHTML = '<p class="text-center">Error loading activities</p>';
+            this.showErrorActivities();
         }
+    }
+
+    showEmptyActivities() {
+        const activitiesContainer = document.getElementById('recentActivities');
+        activitiesContainer.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-icon">📝</div>
+                <p>No recent activities</p>
+                <small>Activities will appear here when you start using the system</small>
+                <button onclick="window.dashboardManager.createTestActivity()" class="btn btn-sm" style="margin-top: 12px;">Create Test Activity</button>
+            </div>
+        `;
+    }
+
+    async createTestActivity() {
+        try {
+            if (window.activityService) {
+                await window.activityService.addActivity(
+                    'test_activity',
+                    'Test activity created from dashboard',
+                    { timestamp: new Date().toISOString() }
+                );
+                Utils.showToast('Test activity created!', 'success');
+                // Refresh activities after creating test
+                setTimeout(() => this.loadRecentActivities(), 500);
+            } else {
+                Utils.showToast('Activity service not available', 'error');
+            }
+        } catch (error) {
+            console.error('Error creating test activity:', error);
+            Utils.showToast('Failed to create test activity', 'error');
+        }
+    }
+
+    showErrorActivities() {
+        const activitiesContainer = document.getElementById('recentActivities');
+        activitiesContainer.innerHTML = `
+            <div class="error-state">
+                <div class="error-icon">⚠️</div>
+                <p>Error loading activities</p>
+                <button onclick="window.dashboardManager.loadRecentActivities()" class="btn btn-sm">Retry</button>
+            </div>
+        `;
     }
 
     getActivityIcon(activityType) {

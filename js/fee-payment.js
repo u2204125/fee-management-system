@@ -519,6 +519,22 @@ class FeePaymentManager {
             if (response.ok) {
                 const savedPayment = await response.json();
                 console.log('Payment saved successfully:', savedPayment);
+                
+                // Log activity
+                if (window.activityService && this.currentStudent) {
+                    const totalAmount = savedPayment.monthPayments.reduce((sum, mp) => sum + mp.paidAmount, 0);
+                    await window.activityService.addActivity(
+                        'payment_received',
+                        `Payment received: ৳${totalAmount} from ${this.currentStudent.name} (${this.currentStudent.studentId})`,
+                        { 
+                            paymentId: savedPayment._id, 
+                            studentId: this.currentStudent._id,
+                            studentName: this.currentStudent.name,
+                            amount: totalAmount 
+                        }
+                    );
+                }
+                
                 Utils.showToast('Payment processed successfully', 'success');
                 
                 // Show invoice
@@ -529,6 +545,11 @@ class FeePaymentManager {
                 
                 // Clear current student to avoid issues
                 this.currentStudent = null;
+                
+                // Refresh dashboard if it exists
+                if (window.dashboardManager) {
+                    window.dashboardManager.refresh();
+                }
                 
             } else {
                 const errorData = await response.json();

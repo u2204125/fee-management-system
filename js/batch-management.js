@@ -120,10 +120,24 @@ class BatchManager {
             const newBatch = await response.json();
             this.cache.batches.push(newBatch);
 
+            // Log activity
+            if (window.activityService) {
+                await window.activityService.addActivity(
+                    'batch_created',
+                    `Created new batch: ${batchName}`,
+                    { batchId: newBatch._id, batchName }
+                );
+            }
+
             Utils.showToast('Batch created successfully', 'success');
 
             document.getElementById('createBatchForm').reset();
             this.refresh();
+            
+            // Refresh dashboard if it exists
+            if (window.dashboardManager) {
+                window.dashboardManager.refresh();
+            }
         } catch (error) {
             console.error('Error creating batch:', error);
             Utils.showToast(error.message || 'Failed to create batch', 'error');
@@ -167,10 +181,25 @@ class BatchManager {
             const newCourse = await response.json();
             this.cache.courses.push(newCourse);
 
+            // Log activity
+            if (window.activityService) {
+                const batch = this.cache.batches.find(b => b._id === batchId);
+                await window.activityService.addActivity(
+                    'course_created',
+                    `Created new course: ${courseName} in batch ${batch?.name || 'Unknown'}`,
+                    { courseId: newCourse._id, courseName, batchId, batchName: batch?.name }
+                );
+            }
+
             Utils.showToast('Course created successfully', 'success');
 
             document.getElementById('createCourseForm').reset();
             this.refresh();
+            
+            // Refresh dashboard if it exists
+            if (window.dashboardManager) {
+                window.dashboardManager.refresh();
+            }
         } catch (error) {
             console.error('Error creating course:', error);
             Utils.showToast(error.message || 'Failed to create course', 'error');
