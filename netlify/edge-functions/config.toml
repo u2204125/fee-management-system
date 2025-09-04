@@ -1,0 +1,10 @@
+# Netlify Edge Functions Configuration
+# This file enables advanced edge computing features
+
+[[edge_functions]]
+  function = "auth-check"
+  path = "/admin/*"
+
+[[edge_functions]]
+  function = "rate-limit"
+  path = "/api/*"

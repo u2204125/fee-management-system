@@ -1,0 +1,115 @@
+name: Quality Assurance
+
+on:
+  push:
+    branches: [ master, main, develop ]
+  pull_request:
+    branches: [ master, main ]
+
+jobs:
+  code-quality:
+    name: Code Quality Checks
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18.x'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check for security vulnerabilities
+        run: npm audit --audit-level=moderate
+
+      - name: Check package.json format
+        run: npm run lint:package --if-present
+
+      - name: Validate file structure
+        run: |
+          echo "Checking required files..."
+          test -f package.json && echo "✓ package.json exists"
+          test -f netlify.toml && echo "✓ netlify.toml exists"
+          test -f index.html && echo "✓ index.html exists"
+          test -d js && echo "✓ js directory exists"
+          test -d styles && echo "✓ styles directory exists"
+          test -d models && echo "✓ models directory exists"
+          test -d routes && echo "✓ routes directory exists"
+          test -d netlify/functions && echo "✓ netlify/functions directory exists"
+
+      - name: Check environment file template
+        run: |
+          test -f .env.example && echo "✓ .env.example exists"
+          grep -q "MONGODB_URI" .env.example && echo "✓ MONGODB_URI in template"
+          grep -q "SESSION_SECRET" .env.example && echo "✓ SESSION_SECRET in template"
+
+  build-test:
+    name: Build Test
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18.x'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Test build process
+        run: npm run build
+
+      - name: Verify build output
+        run: |
+          echo "Checking build output..."
+          test -d dist && echo "✓ dist directory created"
+          test -f dist/index.html && echo "✓ index.html copied"
+          test -f dist/_redirects && echo "✓ _redirects copied"
+          test -d dist/js && echo "✓ js directory copied"
+          test -d dist/styles && echo "✓ styles directory copied"
+          test -f dist/package.json && echo "✓ package.json copied"
+
+      - name: Check file sizes
+        run: |
+          echo "Build output sizes:"
+          du -sh dist/*
+          
+          # Check if any files are too large
+          find dist -name "*.js" -size +1M -exec echo "Warning: Large JS file found: {}" \;
+          find dist -name "*.css" -size +500k -exec echo "Warning: Large CSS file found: {}" \;
+
+  dependency-check:
+    name: Dependency Analysis
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18.x'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check for outdated packages
+        run: npm outdated || true
+
+      - name: Check package-lock integrity
+        run: npm ci --dry-run
+
+      - name: License compliance check
+        run: |
+          npx license-checker --summary || echo "License checker not available, skipping..."
