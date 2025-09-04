@@ -2,14 +2,14 @@
 
 ## One-Click Deploy
 
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/your-username/btf-fms)
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/u2204125/fee-management-system)
 
 ## Manual Deployment Steps
 
 ### 1. Fork/Clone Repository
 ```bash
-git clone https://github.com/your-username/btf-fms.git
-cd btf-fms
+git clone https://github.com/u2204125/fee-management-system.git
+cd fee-management-system
 ```
 
 ### 2. Set Up MongoDB Atlas

@@ -32,7 +32,7 @@
 In Netlify dashboard, go to Site settings > Environment variables and add:
 
 ```
-MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/btf-fms?retryWrites=true&w=majority
+MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/fee-management-system?retryWrites=true&w=majority
 SESSION_SECRET=your_super_secure_session_secret_minimum_32_characters
 NODE_ENV=production
 ```

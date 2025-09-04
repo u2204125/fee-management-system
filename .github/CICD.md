@@ -1,8 +1,6 @@
 ## CI/CD Pipeline Status
 
-[![Deploy to Netlify](https://github.com/u2204125/bfs-fms/actions/workflows/deploy.yml/badge.svg)](https://github.com/u2204125/bfs-fms/actions/workflows/deploy.yml)
-[![Quality Assurance](https://github.com/u2204125/bfs-fms/actions/workflows/quality.yml/badge.svg)](https://github.com/u2204125/bfs-fms/actions/workflows/quality.yml)
-[![Security Scan](https://github.com/u2204125/bfs-fms/actions/workflows/security.yml/badge.svg)](https://github.com/u2204125/bfs-fms/actions/workflows/security.yml)
+[![Deploy to Netlify](https://github.com/u2204125/fee-management-system/actions/workflows/deploy.yml/badge.svg)](https://github.com/u2204125/fee-management-system/actions/workflows/deploy.yml)
 
 ## Required GitHub Secrets
 
@@ -20,11 +18,6 @@ To enable automatic deployment, add these secrets to your GitHub repository:
    - Site settings > General > Site details
    - Copy Site ID and add as secret
 
-3. **SNYK_TOKEN** (Optional - for enhanced security scanning)
-   - Create account at [Snyk.io](https://snyk.io)
-   - Generate API token
-   - Add as secret
-
 ## Pipeline Overview
 
 ### 🔄 Continuous Integration Workflows
@@ -33,18 +26,8 @@ To enable automatic deployment, add these secrets to your GitHub repository:
    - Triggers on: Push to master/main, Pull Requests
    - Steps: Test → Build → Deploy Preview (PR) / Production (master)
    - Features: Automatic preview deployments for PRs
-   
-2. **Quality Assurance** (`quality.yml`)
-   - Triggers on: Push, Pull Requests
-   - Steps: Code quality checks, Build validation, Dependency analysis
-   - Features: File structure validation, Security audit
-   
-3. **Security Scan** (`security.yml`)
-   - Triggers on: Push, Pull Requests, Weekly schedule
-   - Steps: Vulnerability scanning, Sensitive file detection
-   - Features: Automated security monitoring
 
-4. **Release Management** (`release.yml`)
+2. **Release Management** (`release.yml`)
    - Triggers on: Git tags (v*.*.*)
    - Steps: Create release, Generate changelog, Deploy to production
    - Features: Automated release creation and deployment
@@ -54,11 +37,11 @@ To enable automatic deployment, add these secrets to your GitHub repository:
 ```mermaid
 graph TD
     A[Code Push] --> B{Branch?}
-    B -->|Feature Branch| C[Quality Checks]
+    B -->|Feature Branch| C[Build & Test]
     B -->|Pull Request| D[Preview Deploy]
     B -->|Master/Main| E[Production Deploy]
     
-    C --> F[Security Scan]
+    C --> F[Code Review]
     D --> G[Review & Test]
     E --> H[Lighthouse Check]
     
@@ -78,13 +61,6 @@ graph TD
 - **Lighthouse CI**: Automatic performance, accessibility, and SEO audits
 - **Build Size Monitoring**: Alerts for large file sizes
 - **Dependency Tracking**: Outdated package notifications
-
-### 🔒 Security Features
-
-- **Automated vulnerability scanning** with npm audit and Snyk
-- **Sensitive file detection** prevents accidental commits
-- **Dependency license compliance** checking
-- **Weekly security audits** via scheduled workflows
 
 ## Manual Deployment Commands
 
@@ -127,11 +103,6 @@ netlify deploy --prod --dir=dist --functions=netlify/functions
    - Ensure NETLIFY_AUTH_TOKEN has proper permissions
    - Verify NETLIFY_SITE_ID is correct
 
-4. **Security Scan Failures**
-   - Review npm audit output
-   - Update vulnerable dependencies
-   - Add exceptions for false positives if needed
-
 ### Monitoring
 
 - **GitHub Actions**: Monitor workflow runs in the Actions tab
@@ -159,9 +130,9 @@ netlify deploy --prod --dir=dist --functions=netlify/functions
 
 When contributing to this project:
 
-1. All PRs trigger quality checks and preview deployments
-2. Security scans must pass before merging
+1. All PRs trigger build checks and preview deployments
+2. Code must pass all automated tests
 3. Performance audits verify no regressions
-4. Code must pass all automated tests
+4. Manual review required before merging
 
-The CI/CD pipeline ensures consistent, secure, and high-quality deployments for the BTF Fee Management System.
+The CI/CD pipeline ensures consistent and high-quality deployments for the BTF Fee Management System.

@@ -1,8 +1,6 @@
 # Break The Fear - Fee Management System
 
-[![Deploy to Netlify](https://github.com/u2204125/bfs-fms/actions/workflows/deploy.yml/badge.svg)](https://github.com/u2204125/bfs-fms/actions/workflows/deploy.yml)
-[![Quality Assurance](https://github.com/u2204125/bfs-fms/actions/workflows/quality.yml/badge.svg)](https://github.com/u2204125/bfs-fms/actions/workflows/quality.yml)
-[![Security Scan](https://github.com/u2204125/bfs-fms/actions/workflows/security.yml/badge.svg)](https://github.com/u2204125/bfs-fms/actions/workflows/security.yml)
+[![Deploy to Netlify](https://github.com/u2204125/fee-management-system/actions/workflows/deploy.yml/badge.svg)](https://github.com/u2204125/fee-management-system/actions/workflows/deploy.yml)
 
 A comprehensive fee management system for coaching centers built with Node.js, Express, MongoDB, and vanilla JavaScript frontend.
 
@@ -26,8 +24,8 @@ A comprehensive fee management system for coaching centers built with Node.js, E
 
 1. **Clone the repository:**
    ```bash
-   git clone <your-repo-url>
-   cd btf-fms
+   git clone https://github.com/u2204125/fee-management-system.git
+   cd fee-management-system
    ```
 
 2. **Install dependencies:**
@@ -36,7 +34,7 @@ A comprehensive fee management system for coaching centers built with Node.js, E
    ```
 
 3. **Configure MongoDB:**
-   - For local MongoDB: Ensure MongoDB is running on `mongodb://localhost:27017/btf-fms`
+   - For local MongoDB: Ensure MongoDB is running on `mongodb://localhost:27017/fee-management-system`
    - For MongoDB Atlas: Update the connection string in `server.js`
 
 4. **Start the server:**
