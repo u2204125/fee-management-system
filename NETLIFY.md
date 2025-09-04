@@ -1,4 +1,4 @@
-# 🚀 Quick Netlify Deployment Guide
+# 🚀 Simple Netlify Deployment Guide
 
 ## One-Click Deploy
 
@@ -17,6 +17,33 @@ cd fee-management-system
 2. Create new cluster
 3. Create database user
 4. Get connection string
+
+### 3. Deploy to Netlify
+1. Login to [Netlify](https://netlify.com)
+2. Click "New site from Git"
+3. Connect your GitHub repository
+4. Set build settings:
+   - **Build command**: `npm run build`
+   - **Publish directory**: `dist`
+   - **Functions directory**: `netlify/functions`
+
+### 4. Add Environment Variables
+In Netlify dashboard → Site settings → Environment variables:
+
+```
+MONGODB_URI=your_atlas_connection_string
+SESSION_SECRET=your_secure_session_secret
+NODE_ENV=production
+```
+
+### 5. Enable Functions
+The site will automatically deploy serverless functions from the `netlify/functions` directory.
+
+## Automatic Deployments
+- Pushes to `master` branch trigger automatic production deployments
+- Pull requests create preview deployments for testing
+
+That's it! Your fee management system is now live on Netlify. 🎉
 
 ### 3. Deploy to Netlify
 1. Connect repository to Netlify

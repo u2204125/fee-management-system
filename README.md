@@ -39,10 +39,19 @@ A comprehensive fee management system for coaching centers built with Node.js, E
 
 4. **Start the server:**
    ```bash
-   node server.js
+   # For production
+   npm start
+   
+   # For development (with auto-restart)
+   npm run dev
    ```
 
-5. **Access the application:**
+5. **Build for deployment:**
+   ```bash
+   npm run build
+   ```
+
+6. **Access the application:**
    - Open your browser and navigate to `http://localhost:5000`
    - Default admin credentials: admin/admin123
 
