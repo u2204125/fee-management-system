@@ -1,0 +1,91 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary-color: #dc267f;
+  --primary-hover: #b91c6b;
+  --success-color: #28a745;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+}
+
+.dark {
+  --primary-color: #dc267f;
+  --primary-hover: #ff2e8f;
+  --success-color: #4caf50;
+  --danger-color: #f44336;
+  --warning-color: #ff9800;
+}
+
+@layer components {
+  .btn {
+    @apply px-4 py-2 rounded-lg font-medium transition-all duration-300 inline-flex items-center gap-2 justify-center;
+  }
+  
+  .btn-primary {
+    @apply bg-primary-500 text-white hover:bg-primary-600 hover:shadow-lg hover:-translate-y-0.5;
+  }
+  
+  .btn-secondary {
+    @apply bg-gray-500 text-white hover:bg-gray-600 hover:shadow-lg hover:-translate-y-0.5;
+  }
+  
+  .btn-outline {
+    @apply border border-primary-500 text-primary-500 hover:bg-primary-500 hover:text-white;
+  }
+  
+  .btn-danger {
+    @apply bg-danger-500 text-white hover:bg-danger-600 hover:shadow-lg hover:-translate-y-0.5;
+  }
+  
+  .btn-small {
+    @apply px-3 py-1.5 text-sm;
+  }
+  
+  .card {
+    @apply bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300;
+  }
+  
+  .form-input {
+    @apply w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all duration-300;
+  }
+  
+  .form-label {
+    @apply block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover);
+}
+
+/* Print styles for invoices */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  .print-only {
+    display: block !important;
+  }
+  
+  body {
+    background: white !important;
+    color: black !important;
+  }
+}

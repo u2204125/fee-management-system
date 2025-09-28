@@ -1,0 +1,40 @@
+# Enable the RewriteEngine
+RewriteEngine On
+
+# If you're in a subdirectory, uncomment and adjust the RewriteBase
+# RewriteBase /api/
+
+# Redirect all requests to the Node.js application running on the internal port
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ http://localhost:8080/$1 [P,L]
+
+# Set security headers
+<IfModule mod_headers.c>
+    # Protect against XSS attacks
+    Header set X-XSS-Protection "1; mode=block"
+    
+    # Prevent MIME-type sniffing
+    Header set X-Content-Type-Options "nosniff"
+    
+    # Disable iframe embedding from other domains
+    Header set X-Frame-Options "SAMEORIGIN"
+    
+    # Enable HSTS for HTTPS
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains" env=HTTPS
+    
+    # Allow CORS
+    Header set Access-Control-Allow-Origin "*"
+    Header set Access-Control-Allow-Methods "GET, POST, OPTIONS, PUT, DELETE"
+    Header set Access-Control-Allow-Headers "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+</IfModule>
+
+# Prevent access to sensitive files
+<FilesMatch "^(\.|package\.json|package-lock\.json|composer\.json|composer\.lock|\.env|\.env\.example|\.gitignore|\.htaccess|\.[a-zA-Z]+rc)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Custom error handling
+ErrorDocument 404 /index.js
+ErrorDocument 500 /index.js

@@ -1,0 +1,108 @@
+# Node.js dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Build output
+dist/
+build/
+coverage/
+tmp/
+temp/
+.cache/
+logs/
+*.log
+
+# File uploads and temporary files
+uploads/
+temp/
+*.tmp
+*.temp
+
+# Database files (SQLite)
+*.db
+*.sqlite
+*.sqlite3
+
+# Session store
+sessions/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# IDE files
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+.atom/
+.brackets.json
+
+# Misc
+*.local
+*.swp
+*.swo
+*.bak
+*.orig
+*.rej
+
+# Test output
+test-results/
+jest-html-reporters-*.html
+coverage/
+*.lcov
+
+# PM2 process files
+ecosystem.config.js
+.pm2/
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# nyc test coverage
+.nyc_output
+
+# Grunt intermediate storage
+.grunt
+
+# Bower dependency directory
+bower_components
+
+# node-waf configuration
+.lock-wscript
+
+# Dependency directories
+jspm_packages/
+
+# Optional npm cache directory
+.npm
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# ESLint cache
+.eslintcache
+
+# Optional stylelint cache
+.stylelintcache

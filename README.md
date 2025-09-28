@@ -1,12 +1,51 @@
 # Break The Fear - Fee Management System
 
-A simple and efficient fee management system for coaching centers built with Node.js, Express, MongoDB, and vanilla JavaScript.
+A comprehensive, full-stack fee management system for educational institutions, built with modern technologies and optimized for both development and production environments.
+
+## 🎯 Overview
+
+The Fee Management System is a complete solution for educational institutions to manage:
+- **Student Registration & Management**
+- **Fee Payment Processing**
+- **Invoice Generation & Tracking**
+- **Institutional Administration**
+- **Comprehensive Reporting**
+- **Multi-user Role Management**
+
+## 🏗️ Architecture
+
+### Full-Stack Technology Stack
+- **Frontend**: Next.js 14, React, TypeScript, Tailwind CSS
+- **Backend**: Node.js, Express.js, MongoDB
+- **Authentication**: Session-based with JWT fallback
+- **State Management**: React Query + Context API
+- **Database**: MongoDB with Mongoose ODM
+
+### Project Structure
+```
+fee-management-system/
+├── backend/              # Node.js/Express API
+│   ├── config/          # Database & server configuration
+│   ├── controllers/     # Business logic
+│   ├── models/         # Database schemas
+│   ├── routes/         # API endpoints
+│   ├── middleware/     # Authentication & security
+│   └── server.js       # Application entry point
+├── frontend/            # Next.js React application
+│   ├── app/            # Next.js App Router pages
+│   ├── components/     # Reusable UI components
+│   ├── contexts/       # React contexts
+│   ├── lib/           # API client & utilities
+│   └── public/        # Static assets
+└── README.md          # This file
+```
 
 ## 🚀 Quick Start
 
 ### Prerequisites
-- Node.js (v14 or higher)
-- MongoDB (local or MongoDB Atlas)
+- Node.js 16+ and npm
+- MongoDB 4.4+ (local or MongoDB Atlas)
+- Git
 
 ### Installation
 
@@ -16,349 +55,418 @@ A simple and efficient fee management system for coaching centers built with Nod
    cd fee-management-system
    ```
 
-2. **Install dependencies:**
+2. **Backend Setup:**
    ```bash
+   cd backend
    npm install
-   ```
-
-3. **Configure environment:**
-   Create a `.env` file in the root directory:
-   ```env
-   MONGODB_URI=mongodb://localhost:27017/fee-management-system
-   SESSION_SECRET=your_32_character_secret_key_here
-   PORT=5000
-   ```
-
-4. **Start the application:**
-   ```bash
-   # For production
-   npm start
-   
-   # For development (with auto-restart)
+   cp .env.example .env
+   # Edit .env with your MongoDB URI and other settings
    npm run dev
    ```
 
-5. **Access the application:**
-   - Open your browser and navigate to `http://localhost:5000`
-   - **Default admin credentials:** admin / admin123
+3. **Frontend Setup:**
+   ```bash
+   cd ../frontend
+   npm install
+   # Create .env.local if needed
+   npm run dev
+   ```
 
-## 🎯 Features
+4. **Access the Application:**
+   - Frontend: http://localhost:3002
+   - Backend API: http://localhost:3001
+   - Health Check: http://localhost:3001/api/health
 
-### Core Modules
-- **🔐 Authentication System** - Secure login with session management
-- **👥 User Management** - Role-based access control (Admin, Manager, Developer)
-- **🏫 Institution Management** - Multi-institution support
-- **🎓 Student Management** - Complete student database with enrollment tracking
-- **📚 Course & Batch Management** - Organize students by courses and batches
-- **📅 Month Management** - Course-specific month configuration
-- **💰 Fee Payment System** - Payment processing with:
-  - Multi-month payment support
-  - Discount management
-  - Auto-generated invoice numbers
-  - Reference and receiver tracking
-- **📊 Reports & Analytics** - Comprehensive reporting with date filters
-- **🧾 Invoice Generation** - Professional thermal printer-ready invoices
+## ✨ Key Features
 
-### Dashboard Features
-- Real-time statistics (students, batches, revenue, pending fees)
-- Recent activities tracking
-- Quick overview of system status
+### 🔐 Authentication & Security
+- **Session-based Authentication** with secure cookies
+- **Role-based Access Control** (Developer, Admin, User)
+- **Password Hashing** with bcrypt
+- **CSRF Protection** and security headers
+- **Rate Limiting** to prevent abuse
 
-## 🛠️ Tech Stack
+### 👥 Student Management
+- **Student Registration** with auto-generated IDs
+- **Institution Management** with addresses
+- **Batch & Course Assignment**
+- **Multiple Course Enrollment**
+- **Advanced Search & Filtering**
 
-- **Backend:** Node.js, Express.js
-- **Database:** MongoDB with Mongoose ODM
-- **Frontend:** Vanilla HTML, CSS, JavaScript
-- **Authentication:** Express-session
-- **Architecture:** MVC pattern with RESTful APIs
+### 💰 Payment Processing
+- **Fee Payment Processing** with validation
+- **Automatic Invoice Generation**
+- **Discount Management** (fixed/percentage)
+- **Multiple Payment Methods**
+- **Payment History Tracking**
 
-## 📁 Project Structure
+### 📊 Reporting & Analytics
+- **Payment Reports** with date filtering
+- **Discount Analysis** and summaries
+- **Student Statistics** and demographics
+- **Revenue Tracking** and trends
+- **Export Functionality** (CSV/PDF)
 
+### 🎨 Modern UI/UX
+- **Responsive Design** for all devices
+- **Dark/Light Theme** support
+- **Intuitive Navigation** with breadcrumbs
+- **Real-time Notifications**
+- **Loading States** and error handling
+
+## 📖 API Documentation
+
+### Authentication Endpoints
+- `POST /api/auth/login` - User authentication
+- `GET /api/auth/session` - Session validation
+- `POST /api/auth/logout` - Session termination
+
+### Core Resource Endpoints
+- **Students**: `/api/students/*` - CRUD operations, search
+- **Payments**: `/api/payments/*` - Payment processing, invoices
+- **Institutions**: `/api/institutions/*` - Institution management
+- **Batches**: `/api/batches/*` - Batch management
+- **Courses**: `/api/courses/*` - Course management
+- **Users**: `/api/users/*` - User management
+
+### System Endpoints
+- `GET /api/health` - System health check
+- `GET /api/activities` - Activity logging
+- Various configuration endpoints for references and options
+
+## 🛠️ Development
+
+### Backend Development
+```bash
+cd backend
+npm run dev          # Start with nodemon
+npm test            # Run tests
+npm start           # Production start
 ```
-├── server.js              # Main server file
-├── package.json           # Dependencies and scripts
-├── index.html             # Main frontend file
-├── js/                    # Frontend JavaScript
-│   ├── auth.js
-│   ├── dashboard.js
-│   ├── student-management.js
-│   ├── fee-payment.js
-│   └── ...
-├── styles/                # CSS files
-├── models/                # MongoDB schemas
-├── routes/                # API routes
-└── test/                  # Test files
+
+### Frontend Development
+```bash
+cd frontend
+npm run dev         # Development server
+npm run build       # Production build
+npm run lint        # Code linting
+npm start          # Production server
+```
+
+### Environment Configuration
+
+**Backend (.env):**
+```env
+PORT=3001
+NODE_ENV=development
+MONGODB_URI=mongodb://localhost:27017/fee-management
+SESSION_SECRET=your_session_secret
+CORS_ORIGIN=http://localhost:3002
+```
+
+**Frontend (.env.local):**
+```env
+NEXT_PUBLIC_API_URL=http://localhost:3001
+```
+
+## 🚢 Deployment
+
+### Production Deployment
+
+1. **Backend Deployment:**
+   ```bash
+   cd backend
+   npm install --production
+   npm start
+   # Or use PM2 for process management
+   pm2 start server.js --name "fee-management-api"
+   ```
+
+2. **Frontend Deployment:**
+   ```bash
+   cd frontend
+   npm run build
+   npm start
+   # Or deploy to Vercel/Netlify
+   ```
+
+### Shared Hosting Support
+The backend includes special handling for shared hosting environments:
+- Custom port binding
+- Alternative port fallback
+- Connection timeout management
+- Environment detection
+
+### Docker Support (Optional)
+```bash
+# Build and run with Docker
+docker-compose up --build
 ```
 
 ## 🔧 Configuration
 
-### Database Setup
+### Database Configuration
+- **MongoDB** connection with retry logic
+- **Session storage** in MongoDB
+- **Automatic indexing** for performance
+- **Connection pooling** for scalability
 
-**Option 1: Local MongoDB**
-1. Install MongoDB on your system
-2. Start MongoDB service
-3. Use connection string: `mongodb://localhost:27017/fee-management-system`
+### Security Configuration
+- **CORS** setup for frontend domains
+- **Helmet.js** for security headers
+- **Rate limiting** for API protection
+- **Session** security configuration
 
-**Option 2: MongoDB Atlas (Cloud)**
-1. Create account at [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
-2. Create new cluster and database user
-3. Get connection string and update `.env` file
+## 📚 User Guides
 
-### Environment Variables
+### For Administrators
+1. **System Setup**: Configure institutions, batches, and courses
+2. **User Management**: Create user accounts with appropriate roles
+3. **Student Registration**: Add students and assign to batches
+4. **Payment Processing**: Handle fee payments and generate invoices
+5. **Reporting**: Generate and export various reports
 
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `MONGODB_URI` | MongoDB connection string | `mongodb://localhost:27017/fee-management-system` |
-| `SESSION_SECRET` | Secret key for sessions | Required |
-| `PORT` | Server port | `5000` |
-
-## 👥 User Roles
-
-| Role | Permissions |
-|------|-------------|
-| **Admin** | Full system access, user management |
-| **Manager** | Student and fee management, reports |
-| **Developer** | Limited access for testing |
-
-**Demo Credentials:**
-- Admin: `admin` / `admin123`
-- Manager: `manager` / `manager123`
-- Developer: `developer` / `dev123`
+### For Users
+1. **Login**: Access the system with provided credentials
+2. **Student Search**: Find students by ID or name
+3. **Payment Entry**: Process fee payments efficiently
+4. **View Reports**: Access payment and student reports
 
 ## 🧪 Testing
 
-Run basic tests:
+### Backend Testing
 ```bash
-npm test
+cd backend
+npm test                # Basic structure tests
 ```
 
-## 📊 Usage Guide
+### Frontend Testing
+```bash
+cd frontend
+npm run build          # Build verification
+npm run lint           # Code quality check
+```
 
-1. **Login** with appropriate credentials
-2. **Create Institution** (if not exists)
-3. **Add Batches and Courses** for organization
-4. **Configure Months** for each course
-5. **Add Students** and enroll them in courses
-6. **Process Fee Payments** with invoicing
-7. **Generate Reports** for analysis
-
-## 🔒 Security Features
-
-- Secure password hashing with bcrypt
-- Session-based authentication
-- Input validation and sanitization
-- CORS protection
-- Environment-based configuration
-
-## 📝 License
-
-MIT License - see LICENSE file for details.
+### Manual Testing
+- Authentication flows
+- CRUD operations
+- Payment processing
+- Report generation
+- Responsive design
 
 ## 🤝 Contributing
 
+### Development Workflow
 1. Fork the repository
-2. Create a feature branch
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
 3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
+4. Commit your changes (`git commit -m 'Add some amazing feature'`)
+5. Push to the branch (`git push origin feature/amazing-feature`)
+6. Open a Pull Request
 
----
+### Code Standards
+- **TypeScript** for type safety (frontend)
+- **ESLint** for code quality
+- **Consistent naming** conventions
+- **Comprehensive comments** for complex logic
+- **Error handling** for all operations
 
-**Break The Fear Fee Management System** - Simple, Secure, Efficient
+## 🐛 Troubleshooting
 
-## 🚀 Features
+### Common Issues
 
-### Core Modules
+**Connection Issues:**
+- Verify MongoDB is running
+- Check environment variables
+- Ensure ports 3001 and 3002 are available
 
-- **🔐 Authentication System**: Secure login with session management
-- **👥 User Management**: Role-based access control (Admin, Manager, Developer)
-- **🏫 Institution Management**: Multi-institution support with complete CRUD operations
-- **🎓 Student Management**: Comprehensive student database with enrollment tracking
-- **📚 Course & Batch Management**: Organize students by courses and batches
-- **📅 Month Management**: Course-specific month configuration
-- **💰 Fee Payment System**: Advanced payment processing with:
-  - Multi-month payment support
-  - Discount management
-  - Auto-generated invoice numbers
-  - Reference and receiver tracking
-- **📊 Reports & Analytics**: Comprehensive reporting with:
-  - Date-wise reports
-  - Weekly/Monthly summaries
-  - Course-wise filtering
-  - Student-wise analysis
-  - CSV export functionality
-- **🧾 Invoice Generation**: Professional thermal printer-ready invoices
-- **🌓 Theme Support**: Dark/Light theme switching
+**Authentication Problems:**
+- Clear browser cookies
+- Check session configuration
+- Verify user credentials
 
-### Advanced Features
-
-- **Real-time Data Sync**: All data is synced with MongoDB in real-time
-- **Smart Filtering**: Advanced filtering in students database
-- **Auto-calculations**: Automatic fee calculations and due amount tracking
-- **Responsive Design**: Works on desktop, tablet, and mobile devices
-- **Print Support**: Optimized for thermal printer invoices
-
-## 🗄️ Database Schema
-
-### Collections
-
-- **users**: User authentication and role management
-- **institutions**: Institution/coaching center details
-- **students**: Student information with institution and batch references
-- **courses**: Course definitions with fee structures
-- **batches**: Batch management with course associations
-- **months**: Monthly payment periods linked to courses
-- **payments**: Payment records with detailed tracking
-- **referenceOptions**: Payment reference options
-- **receivedByOptions**: Payment receiver options
-
-### Key Relationships
-
-- Students → Institutions (Many-to-One)
-- Students → Batches (Many-to-One)
-- Batches → Courses (Many-to-One)
-- Payments → Students (Many-to-One)
-- Payments → Months (Many-to-Many through monthPayments)
-
-## 🔌 API Endpoints
-
-### Authentication
-- `POST /api/auth/login` - User login
-- `POST /api/auth/logout` - User logout
-- `GET /api/auth/check` - Check authentication status
-
-### Core Resources
-- `GET|POST|PUT|DELETE /api/users` - User management
-- `GET|POST|PUT|DELETE /api/institutions` - Institution management
-- `GET|POST|PUT|DELETE /api/students` - Student management
-- `GET|POST|PUT|DELETE /api/courses` - Course management
-- `GET|POST|PUT|DELETE /api/batches` - Batch management
-- `GET|POST|PUT|DELETE /api/months` - Month management
-- `GET|POST|PUT|DELETE /api/payments` - Payment management
-- `GET|POST|PUT|DELETE /api/reference-options` - Reference options
-- `GET|POST|PUT|DELETE /api/received-by-options` - Received by options
-
-## 🛡️ Security Features
-
-- **Session-based Authentication**: Secure server-side session management
-- **Input Validation**: Comprehensive input validation using Mongoose schemas
-- **XSS Protection**: HTML escaping for all user inputs
-- **CORS Configuration**: Proper CORS setup for API security
-- **Password Security**: Secure password handling and validation
-
-## 📱 Frontend Architecture
-
-### Module Structure
-```
-js/
-├── auth.js                 # Authentication management
-├── main.js                 # Application initialization
-├── navigation.js           # Navigation and routing
-├── dashboard.js            # Dashboard functionality
-├── user-management.js      # User CRUD operations
-├── student-management.js   # Student CRUD operations
-├── students-database.js    # Student listing with filters
-├── batch-management.js     # Batch CRUD operations
-├── fee-payment.js          # Payment processing
-├── reference-management.js # Reference option management
-├── reports.js              # Report generation
-├── invoice.js              # Invoice generation
-└── utils.js                # Utility functions
-```
-
-### Service Layer
-```
-js/services/
-├── ActivityService.js      # Activity logging
-├── BatchService.js         # Batch operations
-├── CourseService.js        # Course operations
-├── InstitutionService.js   # Institution operations
-├── MonthService.js         # Month operations
-├── PaymentService.js       # Payment operations
-└── StudentService.js       # Student operations
-```
-
-## 🎨 Styling
-
-- **Component-based CSS**: Modular and reusable styles
-- **Theme System**: Support for multiple themes
-- **Responsive Design**: Mobile-first approach
-- **Print Styles**: Optimized for invoice printing
-
-## 🔧 Development
-
-### Project Structure
-```
-├── server.js               # Express server setup
-├── package.json            # Dependencies and scripts
-├── index.html              # Main application file
-├── backend/                # Future backend organization
-├── js/                     # Frontend JavaScript modules
-├── styles/                 # CSS stylesheets
-├── models/                 # Mongoose data models
-└── routes/                 # Express API routes
-```
-
-### Adding New Features
-
-1. **Backend**: Create new models in `models/` and routes in `routes/`
-2. **Frontend**: Add new modules in `js/` and corresponding styles
-3. **Database**: Update Mongoose schemas as needed
-4. **API**: Follow RESTful conventions for new endpoints
-
-### Testing
-
-- Test all CRUD operations through the UI
-- Verify API endpoints using tools like Postman or curl
-- Test responsive design on different screen sizes
-- Validate print functionality with thermal printers
-
-## 🚀 Deployment
-
-### Production Setup
-
-1. **Environment Variables**: Set up production MongoDB connection
-2. **Process Management**: Use PM2 or similar for process management
-3. **Reverse Proxy**: Configure Nginx for production deployment
-4. **SSL Certificate**: Set up HTTPS for secure communication
-
-### Recommended Production Stack
-
-- **Server**: Ubuntu/CentOS with Node.js
-- **Database**: MongoDB Atlas or self-hosted MongoDB
-- **Process Manager**: PM2
-- **Web Server**: Nginx as reverse proxy
-- **SSL**: Let's Encrypt certificates
-
-## 📈 Performance Features
-
-- **Client-side Caching**: localStorage caching for improved performance
-- **Async Operations**: Non-blocking API calls
-- **Optimized Queries**: Efficient MongoDB queries with proper indexing
-- **Lazy Loading**: Load data only when needed
-
-## 🔄 Migration Notes
-
-This system has been migrated from localStorage-based storage to MongoDB for:
-- Better data persistence
-- Multi-user support
-- Enhanced security
-- Scalability and performance
-- Professional deployment capabilities
+**Build Errors:**
+- Clear node_modules and reinstall
+- Check Node.js version compatibility
+- Verify all dependencies are installed
 
 ## 📄 License
 
+This project is part of the Break The Fear educational initiative.
+
+## 🆘 Support
+
+For support and questions:
+- Check the documentation in `/backend/README.md` and `/frontend/README.md`
+- Review the API endpoints and examples
+- Check the troubleshooting section above
+
+---
+
+**Project Version**: 1.0.0  
+**Last Updated**: September 2025  
+**Maintained by**: Break The Fear Team
+   # Backend dependencies
+   cd backend
+   npm install
+   
+   # Frontend dependencies
+   cd ../frontend
+   npm install
+   ```
+
+3. **Configure environment:**
+   Create a `.env` file in the backend directory based on the `.env.example` template.
+
+4. **Start the application:**
+   ```bash
+   # Start backend server (development mode)
+   cd backend
+   npm run dev
+   ```
+
+5. **Access the application:**
+   - Open the frontend directly by double-clicking `frontend/index.html` file
+   - Or navigate to the frontend folder and open it in a browser: `file:///path/to/fee-management-system/frontend/index.html`
+   - Default admin credentials: `admin` / `admin123`
+
+## 📊 Key Features
+
+- **User Authentication** - Secure login with role-based access control
+- **Student Management** - Complete student database with enrollment tracking
+- **Fee Payment Processing** - Multi-month payment support with discounts
+- **Invoicing** - Auto-generated invoice numbers optimized for thermal printers
+- **Reporting** - Comprehensive financial and student reports
+- **Multi-Institution Support** - Manage multiple institutions from one dashboard
+
+## 🛠️ Project Scripts
+
+### Backend Scripts
+
+| Script | Description |
+|--------|-------------|
+| `npm start` | Start production server |
+| `npm run dev` | Start development server with nodemon |
+| `npm test` | Run test suite |
+| `npm run reset-demo` | Reset the fundamental users' data |
+
+### Frontend Usage
+
+The frontend is designed to work without any build process or server:
+- Open `frontend/index.html` directly in a browser
+- For development, the frontend will connect to a local backend at `http://localhost:5000`
+- For production, it will automatically connect to `http://api.breakthefear-bd.com/`
+
+## � Environment Variables
+
+Create a `.env` file in the backend directory with these variables:
+
+| Variable | Description | Required | Default |
+|----------|-------------|----------|---------|
+| `MONGODB_URI` | MongoDB connection string | Yes | - |
+| `SESSION_SECRET` | Session encryption key | Yes | - |
+| `PORT` | Server port | No | 5000 |
+| `NODE_ENV` | Environment (development/production) | No | development |
+| `CORS_ORIGIN` | Allowed CORS origins | No | * |
+| `SHARED_HOSTING` | Set to 'true' for shared hosting | No | false |
+| `BIND_IP` | IP to bind server to | No | 0.0.0.0 |
+| `CONNECTION_TIMEOUT` | Connection timeout in ms | No | 120000 |
+
+## 🌐 Deployment Guide
+
+### Shared Hosting Deployment
+
+1. **Prepare your files:**
+   ```bash
+   # Package backend (no build needed for frontend)
+   cd backend
+   npm ci --production
+   ```
+
+2. **Upload to server:**
+   - Upload `backend` folder to your server root directory
+   - Upload `frontend` folder to your public HTML directory
+
+3. **Configure .htaccess:**
+   Create an `.htaccess` file in your backend directory:
+   ```
+   <IfModule mod_rewrite.c>
+     RewriteEngine On
+     RewriteBase /
+     RewriteRule ^index\.html$ - [L]
+     RewriteCond %{REQUEST_FILENAME} !-f
+     RewriteCond %{REQUEST_FILENAME} !-d
+     RewriteRule . /index.html [L]
+   </IfModule>
+   
+   # Set environment variables
+   SetEnv NODE_ENV production
+   SetEnv SHARED_HOSTING true
+   ```
+
+4. **Configure Node.js:**
+   - Use provided shared hosting configuration in server.js
+   - Set environment variables in hosting control panel
+   - Use MongoDB Atlas for database
+
+5. **Start the application:**
+   ```bash
+   cd backend
+   node server.js
+   ```
+
+### Netlify Frontend Deployment
+
+1. **Create `netlify.toml` file:**
+   ```toml
+   [build]
+     publish = "frontend/"
+     command = "echo 'No build needed, using static files'"
+   
+   [[redirects]]
+     from = "/api/*"
+     to = "http://api.breakthefear-bd.com/:splat"
+     status = 200
+     force = true
+   
+   [[redirects]]
+     from = "/*"
+     to = "/index.html"
+     status = 200
+   ```
+
+2. **Deploy to Netlify:**
+   - Connect your GitHub repository to Netlify
+   - Set environment variables in Netlify dashboard
+   - Deploy with the settings from netlify.toml
+
+3. **Configure API URL:**
+   - The frontend is configured to use `http://api.breakthefear-bd.com/` in production
+
+## 🔄 Database Backup & Restore
+
+### Backup MongoDB:
+```bash
+mongodump --uri="mongodb://username:password@host:port/database" --out=./backup
+```
+
+### Restore MongoDB:
+```bash
+mongorestore --uri="mongodb://username:password@host:port/database" ./backup
+```
+
+## � User Roles
+
+| Role | Permissions |
+|------|-------------|
+| **Admin** | Full access, user management, settings |
+| **Manager** | Student and fee management, reports |
+| **Developer** | Limited access for testing |
+
+## 📝 License
+
 This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
 
 ## 📞 Support
 
 For support and queries, contact: info@breakthefear.com
-</parameter>
